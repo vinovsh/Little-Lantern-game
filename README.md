@@ -42,6 +42,8 @@ The preset includes arm64-v8a, armeabi-v7a and x86_64, Android 8 or later, lands
 
 The debug APK is for installation and testing. A Play release needs the publisher's signing setup, a release export, an incremented version code and a signed AAB. Signing credentials must remain outside version control. Remove x86_64 from a store build if emulator support is unnecessary.
 
+For headless software emulation, use the emulator's `-gpu swangle` backend. The older `swiftshader_indirect` backend can reject Godot shaders because of a driver uniform-limit bug. The validation record covers native screen rendering, menu navigation, Android save creation, installation and the automated gameplay checks; physical-device performance still needs verification.
+
 ## Advertising
 
 The native `LanternAds` bridge uses Google Mobile Ads **25.5.0** and UMP **4.0.0**. It implements consent gating, privacy options, rewarded callbacks, interstitials, bounded retries, expiry checks and foreground recovery. No mediation adapters or server-side rewards are included.
