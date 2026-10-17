@@ -1,0 +1,12 @@
+.godot/
+build/
+android/build/
+android/.build_version
+native/android/ads-config.json
+*.keystore
+*.jks
+*.apk
+*.aab
+export_credentials.cfg
+.DS_Store
+

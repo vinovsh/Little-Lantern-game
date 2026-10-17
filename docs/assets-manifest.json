@@ -1,0 +1,155 @@
+[
+  {
+    "path": "assets/art/checkpoint.png",
+    "bytes": 278762,
+    "sha256": "3f6a9e7e45b4a8b1bab0aacf79adb39e7ba3f9a628822702e0962529fe24a8c9",
+    "width": 580,
+    "height": 604,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/forest.png",
+    "bytes": 2624738,
+    "sha256": "efd5596eabd9fb19c65423f7f806dbc99d7196e6e7c78e017e2c9f8c739b6326",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/art/gate.png",
+    "bytes": 454648,
+    "sha256": "2a497d2ea5706858dc25f0994c3b77dc6c82e9588b9c8bd552d47701b47b835f",
+    "width": 504,
+    "height": 588,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/hero.png",
+    "bytes": 1510842,
+    "sha256": "853a0e9346d05c02d8345d37340df9064ab55926e1703cd9c83bea292fbc434f",
+    "width": 1408,
+    "height": 1280,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/hero_atlas.png",
+    "bytes": 1757094,
+    "sha256": "b17dc8d2d1dd431107c3a50143c6a75f3d11c0c820e14286c09251a50b517a72",
+    "width": 1280,
+    "height": 1280,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/hero_atlas_source.png",
+    "bytes": 1794453,
+    "sha256": "f1a19174246638e5de1cde67ddb5b4274039d5d782c63c870944802b6bb1ab6b",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/icon.png",
+    "bytes": 135485,
+    "sha256": "07ada11431e37c69a3cfb53c5156bf9d97092e126a605f023b82adfeb0f4afe2",
+    "width": 256,
+    "height": 256,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/art/platform.png",
+    "bytes": 283677,
+    "sha256": "4ff759bde7bef37281ae0636e3a81ce45410a540952729524568336be00f00a7",
+    "width": 708,
+    "height": 290,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/receiver.png",
+    "bytes": 275839,
+    "sha256": "c6d4e9cf52de4cefefda874b7496f245737909988d105adefebf03be6bf7012b",
+    "width": 588,
+    "height": 608,
+    "mode": "RGBA"
+  },
+  {
+    "path": "assets/art/world-0.png",
+    "bytes": 1113652,
+    "sha256": "590a9013beb8e8be5f5a371f7170d8324dcbdeb8e8de4b9022cc4ccb2853a7cd",
+    "width": 1182,
+    "height": 665,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/art/world-1.png",
+    "bytes": 1126465,
+    "sha256": "0cffd69f094a284fe4a1916691414ef7cbda68f504ae33b44ec39221133564f4",
+    "width": 1182,
+    "height": 665,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/audio/checkpoint.wav",
+    "bytes": 55168,
+    "sha256": "04bceb95fb0ee69faacf0a02caa5a0cef8ba8344d64812fe4ecef4c10dbbfa01"
+  },
+  {
+    "path": "assets/audio/complete.wav",
+    "bytes": 79424,
+    "sha256": "0358878c367aaf2ab7ba80932bff7d49c0a1505499448e94b730bcf4c34b9783"
+  },
+  {
+    "path": "assets/audio/forest.wav",
+    "bytes": 1411244,
+    "sha256": "a684968d0e98a49f121f36d9441f21aa3679b9ee7977c01dbaa58e3beaf231cf"
+  },
+  {
+    "path": "assets/audio/gate.wav",
+    "bytes": 61782,
+    "sha256": "03043ae623c0082a355578dc39c6a39e8fda5aa3e31357bccd102a6c6ee8a5b4"
+  },
+  {
+    "path": "assets/audio/hurt.wav",
+    "bytes": 22094,
+    "sha256": "14d7f070dbbcbe7dcdd7e66e58c2f447a655f39e1ed81c709010d24ab6bc2bf6"
+  },
+  {
+    "path": "assets/audio/jump.wav",
+    "bytes": 7982,
+    "sha256": "fbc832b7eb11e3485bfa4bce653cf2581c03895f1b7ff7636f7a630d673cfd77"
+  },
+  {
+    "path": "assets/audio/magic.wav",
+    "bytes": 48554,
+    "sha256": "469a50ac73f09b244be783206966ccde37ed576948902982b779e10b0f406bac"
+  },
+  {
+    "path": "assets/audio/pickup.wav",
+    "bytes": 26504,
+    "sha256": "9e111019af15ef4cbafc723a4bd92532c8d10ad9907139a2f576857a68634c1f"
+  },
+  {
+    "path": "assets/audio/tap.wav",
+    "bytes": 4012,
+    "sha256": "e4695d71485d58125090cfca9b41b541687cbb00815c865340f566566825176b"
+  },
+  {
+    "path": "assets/fonts/Interface.ttf",
+    "bytes": 759720,
+    "sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280"
+  },
+  {
+    "path": "assets/fonts/LICENSE.txt",
+    "bytes": 3859,
+    "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+  },
+  {
+    "path": "assets/fonts/Story.ttf",
+    "bytes": 380660,
+    "sha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab"
+  },
+  {
+    "path": "assets/licenses/GODOT.txt",
+    "bytes": 1149,
+    "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+  }
+]
