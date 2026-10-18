@@ -53,3 +53,15 @@ func shutdown() -> void:
 func _exit_tree() -> void:
 	shutdown()
 
+
+func play_theme(chapter: int) -> void:
+	if silent_runner:return
+	var path = "res://assets/audio/"+["forest","river","ember","sky"][clampi(chapter,0,3)]+".wav"
+	var stream = load(path) as AudioStreamWAV
+	if music.stream==stream:return
+	music.stop()
+	music.stream=stream
+	stream.loop_begin=0
+	stream.loop_end=int(round(stream.get_length()*stream.mix_rate))
+	stream.loop_mode=AudioStreamWAV.LOOP_FORWARD
+	music.play()

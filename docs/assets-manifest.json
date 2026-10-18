@@ -151,5 +151,44 @@
     "path": "assets/licenses/GODOT.txt",
     "bytes": 1149,
     "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80"
+  },
+  {
+    "path": "assets/art/fire.png",
+    "bytes": 2167406,
+    "sha256": "5a5785b566ba1a45864a17dc4fe1cfc6b4a4604a94ea697435a055145e30685a",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/art/highlands.png",
+    "bytes": 2477454,
+    "sha256": "e85412c2156bb92da59109fac746239d6eab5e86a9ad185829b52887dbe77348",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/art/water.png",
+    "bytes": 2235972,
+    "sha256": "a1db4d19fc83f821ca983f48940d6b2a4abc17bf9ccf744eb79680c27b86da7b",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  {
+    "path": "assets/audio/ember.wav",
+    "bytes": 705644,
+    "sha256": "3fce561ee625fb36a3efb2759d8cb7c69a80473dea012df170167da55aef48d0"
+  },
+  {
+    "path": "assets/audio/river.wav",
+    "bytes": 705644,
+    "sha256": "9c73a1b50aea765df718dd6b4245badfc88ece5048f2588de51ba406a646a328"
+  },
+  {
+    "path": "assets/audio/sky.wav",
+    "bytes": 705644,
+    "sha256": "e548c2edc270a51acbd442deebb624b1a91bb40d85f8aa424f0220fb73100dc1"
   }
 ]

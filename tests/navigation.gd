@@ -47,7 +47,7 @@ func run() -> void:
 	check(game.state == "map", "Pointer click opens the map")
 	await click(menu_button("1"))
 	check(game.state == "playing" and is_instance_valid(game.world), "Map pointer click finishes loading")
-	game.world.hero.reset_at(game.world.level.checkpoint + Vector2(0,-1))
+	game.world.hero.reset_at(game.world.point(game.world.level.checkpoints[1]) + Vector2(0,-1))
 	for i in range(5): await get_tree().physics_frame
 	game.show_home()
 	await click(menu_button("CONTINUE"))
@@ -55,7 +55,7 @@ func run() -> void:
 	check(Save.data.resume.get("checkpoint",false), "Continue preserves the checkpoint in device storage")
 	game.show_home()
 	await click(menu_button("CONTINUE"))
-	check(game.world.checkpoint_on and game.world.hero.position.distance_to(game.world.level.checkpoint) < 10, "A second Continue returns to the same checkpoint")
+	check(game.world.checkpoint_on and game.world.hero.position.distance_to(game.world.point(game.world.level.checkpoints[1])) < 10, "A second Continue returns to the same checkpoint")
 	game.show_pause()
 	await click(menu_button("RESUME"))
 	check(game.state == "playing" and game.world.can_process(), "Resume pointer click enables gameplay")

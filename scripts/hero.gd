@@ -14,10 +14,16 @@ var was_grounded := false
 var protection := 0.0
 var frozen := false
 var touch_direction := 0.0
+var wet = false
+var wind = Vector2.ZERO
+var on_ice = false
+var glider_unlocked = false
+var gliding = false
+var pushing = false
 
 func _ready() -> void:
 	collision_layer = 2
-	collision_mask = 1
+	collision_mask = 5
 	var collider := CollisionShape2D.new()
 	var shape := CapsuleShape2D.new()
 	shape.radius = 17
@@ -53,7 +59,8 @@ func _physics_process(delta: float) -> void:
 		return
 	protection = maxf(0, protection - delta)
 	var direction := clampf(Input.get_axis("left", "right") + touch_direction, -1, 1)
-	velocity.x = move_toward(velocity.x, direction * SPEED, (2100 if is_on_floor() else 1300) * delta)
+	var acceleration = 430 if on_ice else (2100 if is_on_floor() else 1300)
+	velocity.x = move_toward(velocity.x, direction * (135 if pushing else SPEED) + wind.x, acceleration * delta)
 	if direction != 0:
 		facing = 1 if direction > 0 else -1
 	if is_on_floor():
@@ -70,7 +77,13 @@ func _physics_process(delta: float) -> void:
 		jumped.emit()
 	if Input.is_action_just_released("jump") and velocity.y < -220:
 		velocity.y *= 0.55
-	velocity.y = minf(1000, velocity.y + GRAVITY * delta)
+	gliding = glider_unlocked and not wet and not is_on_floor() and (velocity.y>0 or gliding) and Input.is_action_pressed("jump")
+	if wet:
+		velocity.y = 0 if pushing else move_toward(velocity.y,-430 if Input.is_action_pressed("jump") else 85,1250*delta)
+	elif gliding:
+		velocity.y = move_toward(velocity.y,wind.y if wind.y<0 else 105,1100*delta)
+	else:
+		velocity.y = minf(1000, velocity.y + GRAVITY * delta)
 	move_and_slide()
 	position.x = maxf(24, position.x)
 	if is_on_floor() and not was_grounded:
@@ -91,4 +104,5 @@ func reset_at(point: Vector2) -> void:
 	protection = 1.5
 	frozen = false
 	was_grounded = false
+	touch_direction = 0
 

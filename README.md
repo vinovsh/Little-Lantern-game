@@ -4,16 +4,19 @@ An illustrated Android puzzle adventure built with **Godot 4.5.1**, GDScript and
 
 ## Play
 
-Guide a small lantern carrying creature through ten handcrafted levels in moonlit forests, caverns and ancient ruins. Collect five fireflies, reveal hidden bridges, illuminate sun receivers and reach the gate. Later levels introduce lantern attracted moths and moving platforms.
+Guide a lantern carrying creature through **40 authored puzzle adventure levels** in four chapters: forest (1–10), water (11–20), fire (21–30), and ice/wind (31–40). Each chapter introduces traversal rules, enemies, puzzles and a three-phase guardian.
 
-- Left drag thumbstick with proportional movement and a large right jump button; both support simultaneous touches.
-- Animated idle, run, jump, fall and celebration states.
-- Lantern glow, ambient fireflies, pickup trails, checkpoint bursts and completion particles.
-- Free checkpoint retries, optional hints, local progress, three star ratings and replay.
-- Music and effects sliders, vibration, reduced effects and an in-game guide.
-- Focus loss pauses gameplay; returning to the app requires Resume.
+- Left drag thumbstick, right jump and contextual USE button, with simultaneous touch support.
+- Keys, locked doors, mirrors, receivers, pressure plates, movable crates, valves, decoys and recoverable traps.
+- Swimming, floating cargo, rafts, lava, extinguishable heat decoys, temporary ice, wind and gliding.
+- Twelve ordinary enemy families and four guardians with telegraphed attacks.
+- Animated character, particles, original regional backgrounds and ambient music.
+- Local checkpoint saves, free retries, gradual hints, puzzle journal, optional memories and chapter selection.
+- Focus loss pauses gameplay; music, effects, vibration and reduced effects settings are available.
 
-Keyboard controls: **A/D or arrows** to move, **Space/W/Up** to jump, **E/L** to toggle the lantern, and **Esc/P** to pause.
+Keyboard: **A/D or arrows** move; **Space/W/Up** jump/swim/glide; **E/L** lantern; **F** interact; **J** journal; **Esc/P** pause.
+
+Existing classic saves retain settings and forest access. Classic scores are archived; new campaign ratings and checkpoint state start afresh. Water opens after completing the rebuilt forest finale.
 
 ## Run locally
 
@@ -27,7 +30,9 @@ godot --headless --fixed-fps 60 --path . tests/traversal.tscn
 godot --path .
 ```
 
-The integration suite checks save recovery, progression, all level spawns, movement, jumping, lantern puzzles, checkpoints, death, retries, revives and menu flow. Traversal tests use the actual controller and physics to complete all ten levels. Tests restore the prior local save afterward. Run them in an isolated user-data environment when developing against valuable player data.
+Run `GODOT_BIN=/path/to/godot bash scripts/verify.sh` for the complete isolated test suite. It checks controls, saves, navigation and all 40 level mechanisms. Mechanism scenarios deliberately position the character at puzzle fixtures and exercise actual interaction, light, crate and enemy logic; they are not autonomous full-route walkthroughs. See `docs/CAMPAIGN_IMPLEMENTATION.md` for validation scope.
+
+Rebuild authored campaign data with `python3 scripts/build_campaign.py`; regenerate original regional audio with `python3 scripts/build_audio.py`.
 
 ## Android export
 
@@ -36,14 +41,14 @@ Prerequisites: JDK 17, Android SDK platform 35, build tools 35.0.0, platform too
 ```sh
 python3 scripts/prepare_android.py --template /path/to/4.5.1.stable/android_source.zip
 mkdir -p build
-godot --headless --path . --export-debug Android build/Little-Lantern-1.0.2.apk
+godot --headless --path . --export-debug Android build/Little-Lantern-2.0.0.apk
 ```
 
 The preset includes arm64-v8a, armeabi-v7a and x86_64, Android 8 or later, landscape orientation, immersive mode and disabled platform backup. `android/build` is generated and excluded from Git; `prepare_android.py` recreates the native integration deterministically. Build dependencies are downloaded by Gradle on first export.
 
 The debug APK is for installation and testing. A Play release needs the publisher's signing setup, a release export, an incremented version code and a signed AAB. Signing credentials must remain outside version control. Remove x86_64 from a store build if emulator support is unnecessary.
 
-For headless software emulation, use the emulator's `-gpu swangle` backend. The older `swiftshader_indirect` backend can reject Godot shaders because of a driver uniform-limit bug. The validation record covers native screen rendering, menu navigation, Android save creation, installation and the automated gameplay checks; physical-device performance still needs verification.
+The 2.0.0 build has desktop engine and exported-resource verification. Installation, touch comfort and sustained performance on a physical Android device remain to be checked. Earlier Android rendering checks do not establish device validation for this expanded campaign.
 
 ## Advertising
 
@@ -67,12 +72,12 @@ Interstitial eligibility is every third completed level, after the first three s
 | `scripts/world.gd` | Level objects, puzzles, checkpoints, particles and completion |
 | `scripts/hero.gd` | Character physics and animation |
 | `scripts/drag_control.gd` | Left thumbstick, proportional movement and touch ownership |
-| `scripts/level_data.gd` | Ten authored layouts and validation |
+| `scripts/level_data.gd` | 40 authored layouts and validation |
 | `scripts/save_service.gd` | Versioned local save, backup and recovery |
 | `scripts/audio_service.gd` | Music and sound effects |
 | `scripts/ad_service.gd` | Engine-facing advertising lifecycle |
 | `native/android/LanternAds.java` | Optional Android advertising bridge |
-| `tests/` | Integration and full-route traversal tests |
+| `tests/` | Control, navigation and mechanism scenario tests |
 | `docs/` | Specification, art provenance and validation records |
 
 Local saves live under Godot's `user://` directory. Uninstalling or clearing app data removes progress. This version has no cloud restoration or cross-device synchronization.
