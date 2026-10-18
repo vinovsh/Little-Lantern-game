@@ -107,7 +107,11 @@ func _on_resize() -> void:
 func clear_ui() -> void:
 	release_controls()
 	if is_instance_valid(ui):
-		ui.free()
+		# A menu transition can run inside a child's pressed signal. Keep the
+		# emitter alive until dispatch completes, but retire its input immediately.
+		ui.hide()
+		ui.process_mode = Node.PROCESS_MODE_DISABLED
+		ui.queue_free()
 	ui = Control.new()
 	ui.size = Vector2(screen_width,screen_height)
 	ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -303,6 +307,8 @@ func start_level(index: int, restore := false) -> void:
 	if index <= 2 and not Save.best(index).completed:
 		toast("Move and jump. Tap the lantern to reveal hidden paths.",6)
 	world.persist_checkpoint()
+	if not focused:
+		show_pause()
 
 func show_hud() -> void:
 	clear_ui()
@@ -517,7 +523,7 @@ func confirm_reset() -> void:
 
 func show_privacy() -> void:
 	state = "privacy"
-	var panel := modal("About Little Lantern","An offline adventure · Version 1.0.0",465)
+	var panel := modal("About Little Lantern","An offline adventure · Version " + str(ProjectSettings.get_setting("application/config/version")),465)
 	var body := label("Progress and settings are stored on this device.\nNo account or developer server is used.\nThis build does not request advertising data.\nClearing app data removes your progress.\n\nArt created for Little Lantern.\nGodot Engine · DejaVu fonts",Rect2(40,143,480,210),18,IVORY,panel,false,HORIZONTAL_ALIGNMENT_CENTER)
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button("BACK",Rect2(65,375,205,56),func(): show_settings(settings_return),true,panel)

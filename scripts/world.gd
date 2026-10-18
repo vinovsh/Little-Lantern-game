@@ -74,10 +74,10 @@ func setup(index: int, resume: Dictionary = {}) -> void:
 	checkpoint_snapshot = snapshot()
 	if not resume.is_empty() and int(resume.get("level", 0)) == index:
 		apply_snapshot(resume)
-		checkpoint_snapshot = snapshot()
 		checkpoint_on = resume.get("checkpoint", false) == true
 		deaths = maxi(0,int(resume.get("deaths",0)))
 		elapsed = maxf(0,float(resume.get("elapsed",0)))
+		checkpoint_snapshot = snapshot()
 		hero.position = level.checkpoint + Vector2(0,-2) if checkpoint_on else level.spawn
 		safe_position = hero.position
 

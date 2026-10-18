@@ -1,5 +1,25 @@
 # Build validation
 
+## Version 1.0.1 — 18 October 2026
+
+The navigation regression reproduces engine errors in version 1.0.0 when a menu button frees its own signal emitter. Menus now hide immediately and are destroyed at the end of the frame. Loading interrupted by focus loss now opens paused, with Resume restoring gameplay. Restored checkpoints now capture the checkpoint flag before persisting, so repeated Continue does not lose the checkpoint.
+
+- 179 integration checks and 14 navigation checks pass.
+- Actual pointer events cover Play, level selection, repeated Continue and Resume.
+- Focus loss during asynchronous loading and subsequent recovery pass.
+- All ten real-physics level traversals pass.
+- The verification script rejects engine runtime errors even if Godot returns zero.
+
+Android Gradle export and APK signature verification passed. Version code is 2, version name is 1.0.1, and the signing certificate matches version 1.0.0. All 14 navigation checks also pass against the compiled game resources extracted from the final APK.
+
+- File: `Little-Lantern-1.0.1.apk`
+- Bytes: 105693564
+- SHA256: `dfb2d073ce61981740a40a57521bfcd0f37f532100019c8606ec9971867702a9`
+
+Native installation and Android input were not repeated for this patch. The physical-device performance and touch-feel limitations of the original validation remain. This is a test-signed APK; advertising remains disabled.
+
+## Version 1.0.0 baseline
+
 Build date: 17 October 2026. Version: 1.0.0. Package: `com.rendermind.littlelantern`.
 
 ## Results

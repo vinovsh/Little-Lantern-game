@@ -22,6 +22,7 @@ Install the exact standard Godot **4.5.1 stable** editor and matching export tem
 ```sh
 godot --headless --editor --path . --import
 godot --headless --fixed-fps 60 --path . tests/test_runner.tscn
+godot --headless --fixed-fps 60 --path . tests/navigation.tscn
 godot --headless --fixed-fps 60 --path . tests/traversal.tscn
 godot --path .
 ```
@@ -35,7 +36,7 @@ Prerequisites: JDK 17, Android SDK platform 35, build tools 35.0.0, platform too
 ```sh
 python3 scripts/prepare_android.py --template /path/to/4.5.1.stable/android_source.zip
 mkdir -p build
-godot --headless --path . --export-debug Android build/Little-Lantern-1.0.0.apk
+godot --headless --path . --export-debug Android build/Little-Lantern-1.0.1.apk
 ```
 
 The preset includes arm64-v8a, armeabi-v7a and x86_64, Android 8 or later, landscape orientation, immersive mode and disabled platform backup. `android/build` is generated and excluded from Git; `prepare_android.py` recreates the native integration deterministically. Build dependencies are downloaded by Gradle on first export.
