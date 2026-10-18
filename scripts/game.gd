@@ -16,6 +16,7 @@ var overlay: Control
 var menu_effects: LanternEffects
 var hud_count: Label
 var hud_lantern: LanternTouchControl
+var hud_move: LanternDragControl
 var status_label: Label
 var notification_label: Label
 var notice_remaining := 0.0
@@ -118,6 +119,7 @@ func clear_ui() -> void:
 	ui_layer.add_child(ui)
 	hud_count = null
 	hud_lantern = null
+	hud_move = null
 	status_label = null
 	notification_label = null
 	modal_controls.clear()
@@ -305,7 +307,7 @@ func start_level(index: int, restore := false) -> void:
 	completing = false
 	show_hud()
 	if index <= 2 and not Save.best(index).completed:
-		toast("Move and jump. Tap the lantern to reveal hidden paths.",6)
+		toast("Drag the left pad to move. Tap ↑ to jump and ☼ for light.",6)
 	world.persist_checkpoint()
 	if not focused:
 		show_pause()
@@ -322,20 +324,26 @@ func show_hud() -> void:
 	label(world.level.title,Rect2(screen_width/2-260,69,520,28),16,MUTED,null,false,HORIZONTAL_ALIGNMENT_CENTER)
 	button("?",Rect2(screen_width-margin_right-136,25,55,50),hint_pressed,false,null,true)
 	button("Ⅱ",Rect2(screen_width-margin_right-61,25,58,50),show_pause,false,null,true)
-	add_touch("left","◀",Vector2(margin_left+39,screen_height-64))
-	add_touch("right","▶",Vector2(margin_left+140,screen_height-64))
-	add_touch("jump","↑",Vector2(screen_width-margin_right-150,screen_height-64))
-	hud_lantern = add_touch("lantern","☼",Vector2(screen_width-margin_right-44,screen_height-64))
-	label("JUMP",Rect2(screen_width-margin_right-192,screen_height-17,84,14),10,MUTED,null,false,HORIZONTAL_ALIGNMENT_CENTER)
-	label("LIGHT",Rect2(screen_width-margin_right-86,screen_height-17,84,14),10,GOLD,null,false,HORIZONTAL_ALIGNMENT_CENTER)
+	hud_move = LanternDragControl.new()
+	hud_move.position = Vector2(margin_left+100,screen_height-95)
+	hud_move.axis_changed.connect(func(value: float):
+		if is_instance_valid(world): world.hero.touch_direction = value
+	)
+	ui.add_child(hud_move)
+	add_touch("jump","↑",Vector2(screen_width-margin_right-64,screen_height-95),50)
+	hud_lantern = add_touch("lantern","☼",Vector2(screen_width-margin_right-180,screen_height-85))
+	label("DRAG TO MOVE",Rect2(margin_left+20,screen_height-25,160,18),10,MUTED,null,false,HORIZONTAL_ALIGNMENT_CENTER)
+	label("JUMP",Rect2(screen_width-margin_right-106,screen_height-26,84,18),10,MUTED,null,false,HORIZONTAL_ALIGNMENT_CENTER)
+	label("LIGHT",Rect2(screen_width-margin_right-222,screen_height-26,84,18),10,GOLD,null,false,HORIZONTAL_ALIGNMENT_CENTER)
 	status_label = label("",Rect2(screen_width/2-250,screen_height-61,500,32),17,MUTED,null,false,HORIZONTAL_ALIGNMENT_CENTER)
 	notification_label = label("",Rect2(screen_width/2-410,137,820,45),22,IVORY,null,true,HORIZONTAL_ALIGNMENT_CENTER)
 	update_hud()
 
-func add_touch(action: String, glyph: String, point: Vector2) -> LanternTouchControl:
+func add_touch(action: String, glyph: String, point: Vector2, radius := 39.0) -> LanternTouchControl:
 	var control := LanternTouchControl.new()
 	control.action = action
 	control.glyph = glyph
+	control.button_radius = radius
 	control.position = point
 	ui.add_child(control)
 	return control
@@ -551,7 +559,7 @@ func show_guide() -> void:
 	clear_ui()
 	shade(.7)
 	label("Carry a little light",Rect2(0,60,screen_width,65),42,GOLD,null,true,HORIZONTAL_ALIGNMENT_CENTER)
-	var lines := ["MOVE  ·  Use the left and right arrows.","JUMP  ·  Tap ↑. Hold a little longer to jump higher.","LANTERN  ·  Tap ☼ to toggle your light. Face a hidden path to reveal it.","SUN RECEIVERS  ·  Shine light on a sun disc to open the exit gate.","FIREFLIES  ·  Rescue all five. Finish without a fall for three stars.","CHECKPOINTS  ·  Glowing shrines save your place. Retry is always free.","MOTHS  ·  Jump over them, or switch your lantern off to avoid attracting them."]
+	var lines := ["MOVE  ·  Drag the left thumb pad left or right. Release to stop.","JUMP  ·  Tap ↑. Hold a little longer to jump higher.","LANTERN  ·  Tap ☼ to toggle your light. Face a hidden path to reveal it.","SUN RECEIVERS  ·  Shine light on a sun disc to open the exit gate.","FIREFLIES  ·  Rescue all five. Finish without a fall for three stars.","CHECKPOINTS  ·  Glowing shrines save your place. Retry is always free.","MOTHS  ·  Jump over them, or switch your lantern off to avoid attracting them."]
 	for i in range(lines.size()):
 		label(lines[i],Rect2(120,166+i*53,screen_width-240,48),19,IVORY)
 	label("Keyboard: A / D or arrows · Space to jump · E for light · Esc to pause",Rect2(70,555,screen_width-140,35),16,MUTED,null,false,HORIZONTAL_ALIGNMENT_CENTER)
@@ -618,6 +626,10 @@ func _on_ad_closed() -> void:
 		else: show_pause()
 
 func release_controls() -> void:
+	if is_instance_valid(hud_move):
+		hud_move.release()
+	if is_instance_valid(world):
+		world.hero.touch_direction = 0.0
 	for action in ["left","right","jump","lantern"]:
 		Input.action_release(action)
 

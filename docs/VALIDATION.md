@@ -1,5 +1,21 @@
 # Build validation
 
+## Version 1.0.2 — 18 October 2026
+
+Replaced the separate left and right arrow buttons with a left thumbstick. Drag horizontally for proportional movement and release to stop. A larger jump button sits at the right edge, with the lantern beside it. Keyboard controls remain available.
+
+- 188 integration checks and 14 menu navigation checks pass; all ten level traversals pass.
+- Drag dead zone, proportional speed, left and right movement, direction reversal, release outside the pad, finger ownership and simultaneous drag plus jump pass through viewport input events and real character physics.
+- Focus loss, cancelled touches, stale drag events and HUD rebuilding release movement.
+- Reviewed the rendered gameplay layout at 1280 by 720.
+- Android Gradle build and signature verification pass. The signing identity matches the previous APK.
+- The final APK's compiled resources also pass all 188 integration checks and 14 navigation checks.
+
+Artifact: `Little-Lantern-1.0.2.apk`, version code 3, 105696855 bytes.
+SHA256: `1c5bfc75ed6a4ffffddee584e8c90a935eab9372cffaf8791f58f3a3852ff2db`.
+
+This patch has not been tested on a physical Android device. It remains a test-signed build with advertising disabled.
+
 ## Version 1.0.1 — 18 October 2026
 
 The navigation regression reproduces engine errors in version 1.0.0 when a menu button frees its own signal emitter. Menus now hide immediately and are destroyed at the end of the frame. Loading interrupted by focus loss now opens paused, with Resume restoring gameplay. Restored checkpoints now capture the checkpoint flag before persisting, so repeated Continue does not lose the checkpoint.

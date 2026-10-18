@@ -13,6 +13,7 @@ var buffer := 0.0
 var was_grounded := false
 var protection := 0.0
 var frozen := false
+var touch_direction := 0.0
 
 func _ready() -> void:
 	collision_layer = 2
@@ -51,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	if frozen:
 		return
 	protection = maxf(0, protection - delta)
-	var direction := Input.get_axis("left", "right")
+	var direction := clampf(Input.get_axis("left", "right") + touch_direction, -1, 1)
 	velocity.x = move_toward(velocity.x, direction * SPEED, (2100 if is_on_floor() else 1300) * delta)
 	if direction != 0:
 		facing = 1 if direction > 0 else -1

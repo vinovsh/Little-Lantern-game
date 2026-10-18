@@ -106,13 +106,49 @@ func run() -> void:
 	for i in range(10): await get_tree().physics_frame
 	var starting_x: float = game.world.hero.position.x
 	var starting_y: float = game.world.hero.position.y
-	touch(0,Vector2(game.margin_left+140,game.screen_height-64),true)
-	touch(1,Vector2(game.screen_width-game.margin_right-150,game.screen_height-64),true)
+	var pad: Vector2 = game.hud_move.global_position
+	var jump: Vector2 = Vector2(game.screen_width-game.margin_right-64,game.screen_height-95)
+	touch(0,pad,true)
+	drag(0,pad+Vector2(3,0))
+	check(game.world.hero.touch_direction == 0,"Drag dead zone prevents accidental movement")
+	drag(0,pad+Vector2(30,0))
+	check(game.world.hero.touch_direction > .4 and game.world.hero.touch_direction < .7,"Partial drag produces proportional movement")
+	drag(0,pad+Vector2(70,0))
+	touch(2,pad,true)
+	drag(2,pad-Vector2(70,0))
+	touch(2,pad,false)
+	check(game.world.hero.touch_direction == 1 and game.hud_move.finger == 0,"Another finger cannot steal movement")
+	touch(1,jump,true)
 	for i in range(12): await get_tree().physics_frame
-	check(game.world.hero.position.x > starting_x+20 and game.world.hero.position.y < starting_y-35,"Two simultaneous touch controls move and jump")
-	touch(0,Vector2(game.margin_left+140,game.screen_height-64),false)
-	touch(1,Vector2(game.screen_width-game.margin_right-150,game.screen_height-64),false)
-	check(not Input.is_action_pressed("right") and not Input.is_action_pressed("jump"),"Releasing both touches clears their actions")
+	check(game.world.hero.position.x > starting_x+20 and game.world.hero.position.y < starting_y-35,"Left drag and right jump work simultaneously")
+	touch(1,jump,false)
+	drag(0,pad-Vector2(150,0))
+	check(game.world.hero.touch_direction == -1,"Dragging across the pad reverses direction outside its bounds")
+	var turning_x: float = game.world.hero.position.x
+	for i in range(28): await get_tree().physics_frame
+	check(game.world.hero.position.x < turning_x,"Left drag moves the character left through real physics")
+	touch(0,pad-Vector2(250,0),false)
+	check(game.world.hero.touch_direction == 0 and not Input.is_action_pressed("jump"),"Releasing outside the pad stops movement")
+	touch(0,pad,true)
+	drag(0,pad+Vector2(60,0))
+	game._notification(NOTIFICATION_APPLICATION_FOCUS_OUT)
+	check(game.world.hero.touch_direction == 0 and game.hud_move == null,"Focus loss releases drag movement")
+	game._notification(NOTIFICATION_APPLICATION_FOCUS_IN)
+	game.resume_game()
+	drag(0,pad+Vector2(60,0))
+	check(game.world.hero.touch_direction == 0,"A stale drag after returning cannot restart movement")
+	touch(0,pad,true)
+	drag(0,pad+Vector2(60,0))
+	game._on_resize()
+	check(game.world.hero.touch_direction == 0 and game.hud_move.finger == -1,"Rebuilding the HUD clears held movement")
+	touch(0,pad,true)
+	drag(0,pad+Vector2(60,0))
+	var cancel := InputEventScreenTouch.new()
+	cancel.index = 0
+	cancel.position = pad
+	cancel.canceled = true
+	get_tree().root.push_input(cancel,true)
+	check(game.world.hero.touch_direction == 0 and game.hud_move.finger == -1,"Cancelled system touches release movement")
 	game.show_pause()
 	check(game.world.process_mode == Node.PROCESS_MODE_DISABLED,"Pause stops gameplay")
 	game.show_settings("pause")
@@ -170,4 +206,10 @@ func touch(index: int, position: Vector2, pressed: bool) -> void:
 	event.index = index
 	event.position = position
 	event.pressed = pressed
+	get_tree().root.push_input(event,true)
+
+func drag(index: int, position: Vector2) -> void:
+	var event := InputEventScreenDrag.new()
+	event.index = index
+	event.position = position
 	get_tree().root.push_input(event,true)

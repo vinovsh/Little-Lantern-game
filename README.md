@@ -6,7 +6,7 @@ An illustrated Android puzzle adventure built with **Godot 4.5.1**, GDScript and
 
 Guide a small lantern carrying creature through ten handcrafted levels in moonlit forests, caverns and ancient ruins. Collect five fireflies, reveal hidden bridges, illuminate sun receivers and reach the gate. Later levels introduce lantern attracted moths and moving platforms.
 
-- Landscape touch controls with simultaneous movement and jumping.
+- Left drag thumbstick with proportional movement and a large right jump button; both support simultaneous touches.
 - Animated idle, run, jump, fall and celebration states.
 - Lantern glow, ambient fireflies, pickup trails, checkpoint bursts and completion particles.
 - Free checkpoint retries, optional hints, local progress, three star ratings and replay.
@@ -36,7 +36,7 @@ Prerequisites: JDK 17, Android SDK platform 35, build tools 35.0.0, platform too
 ```sh
 python3 scripts/prepare_android.py --template /path/to/4.5.1.stable/android_source.zip
 mkdir -p build
-godot --headless --path . --export-debug Android build/Little-Lantern-1.0.1.apk
+godot --headless --path . --export-debug Android build/Little-Lantern-1.0.2.apk
 ```
 
 The preset includes arm64-v8a, armeabi-v7a and x86_64, Android 8 or later, landscape orientation, immersive mode and disabled platform backup. `android/build` is generated and excluded from Git; `prepare_android.py` recreates the native integration deterministically. Build dependencies are downloaded by Gradle on first export.
@@ -66,6 +66,7 @@ Interstitial eligibility is every third completed level, after the first three s
 | `scripts/game.gd` | Screens, menus, HUD, touch controls and app lifecycle |
 | `scripts/world.gd` | Level objects, puzzles, checkpoints, particles and completion |
 | `scripts/hero.gd` | Character physics and animation |
+| `scripts/drag_control.gd` | Left thumbstick, proportional movement and touch ownership |
 | `scripts/level_data.gd` | Ten authored layouts and validation |
 | `scripts/save_service.gd` | Versioned local save, backup and recovery |
 | `scripts/audio_service.gd` | Music and sound effects |
